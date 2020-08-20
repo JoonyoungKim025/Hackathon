@@ -13,52 +13,60 @@ document.addEventListener('DOMContentLoaded', function () {
       link.href = urlInput;
       link.textContent = userInput;
       snippetsDiv.append(link);
-      storeLinks({ 'snippets': link });
+      // storeLinks({ 'snippets': link });
+      updateLinks();
       }
 
-      updateLinks();
       document.querySelector('#addSnippet').value = '';
       document.querySelector('#addUrl').value = '';
-})
-
-//     // chrome.tabs.query({currentWindow: true, active: true},
-//     //   function (tabs) {
-//     //     chrome.tabs.sendMessage(tabs[0].id, 'hi')
-//     //   })
-//   }, false)
+  })
 });
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   let links = document.querySelectorAll('a');
-//   let linksArr = [...links];
-//   linksArr.forEach((link) => {
-//     let href = link.getAttribute('href')
-//     link.addEventListener('click', () => {
-//       chrome.tabs.create({url: href})
-//     })
-//   })
-// })
-
+// try 
 function updateLinks() {
-  let links = document.querySelectorAll('a');
+  let links = document.querySelectorAll('a'); //<a></a> <a></a> with dif url and input
   let linksArr = [...links];
   linksArr.forEach((link) => {
     let href = link.getAttribute('href')
-    link.addEventListener('click', () => {
-      chrome.tabs.create({url: href})
-    })
+    // link.removeEventListener('click', () => {
+    //   chrome.tabs.create({url: href})
+    // })
+    if (!link.classList.contains('has-event-listener')) {
+      link.classList.add('has-event-listener');
+      link.addEventListener('click', () => {
+        chrome.tabs.create({url: href})
+      })
+      
+    }
   })
 }
 
-function storeLinks(obj) {
-    chrome.storage.sync.set(obj, function () {
-        alert('success')
-    });
-}
+
+
+// function updateLinks() {
+//   let links = document.querySelectorAll('a'); //<a></a> <a></a> with dif url and input
+//   let linksArr = [...links];
+//   linksArr.forEach((link) => {
+//     let href = link.getAttribute('href')
+//     // link.removeEventListener('click', () => {
+//     //   chrome.tabs.create({url: href})
+//     // })
+//     link.onclick = () => {
+//       chrome.tabs.create({url: href})
+//     }
+//   })
+// }
+
+
+// function storeLinks(obj) {
+//     chrome.storage.sync.set(obj function () {
+//         alert('success')
+//     });
+// }
 
 function getLinks(key) {
     chrome.storage.sync.get(key, function (data) {
-        alert(data.snippets);
+        // alert(data.snippets);
     });
 }
 

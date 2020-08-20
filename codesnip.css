@@ -33,3 +33,8 @@
   justify-content: center;
   margin-top: 1rem;
 }
+
+#banner {
+  background-color: grey;
+  margin-bottom: .4rem;
+}
